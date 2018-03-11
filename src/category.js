@@ -10,7 +10,7 @@ class Category extends React.Component{
                   <div className="bookshelf-books">
                     <ol className="books-grid">
                       {this.props.books && this.props.books.map((book) => (
-                      	<Book key={book.id} />
+                      	<Book key={book.id} book={book} />
                       	))}
                     </ol>
                   </div>
