@@ -10,7 +10,8 @@ class Category extends React.Component{
                   <div className="bookshelf-books">
                     <ol className="books-grid">
                       {this.props.books && this.props.books.map((book) => (
-                      	<Book key={book.id} book={book} />
+                      	<Book key={book.id} book={book}
+                      	onBookUpdate={(book, shelf) => this.props.onBookUpdate(book, shelf)} />
                       	))}
                     </ol>
                   </div>
@@ -22,7 +23,8 @@ class Category extends React.Component{
 
 Category.propTypes={
 	title:PropTypes.string.isRequired,
-	books:PropTypes.array
+	books:PropTypes.array,
+	onBookUpdate:PropTypes.func.isRequired
 }
 
 export default Category;
