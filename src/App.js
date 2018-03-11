@@ -4,19 +4,28 @@ import './App.css'
 import Category from './category.js'
 
 class BooksApp extends React.Component {
+
+ categorizeBooks = function(books){
+    const booksByCategory = {};
+    for (let i = 0; i < books.length; i++) {
+      const bookCategory = books[i].shelf;
+      if(booksByCategory.hasOwnProperty(bookCategory)){
+        booksByCategory[bookCategory].push(books[i]);
+      }
+      else{
+        booksByCategory[bookCategory]=[];
+        booksByCategory[bookCategory].push(books[i]);
+      }
+    }
+
+    this.setState(booksByCategory);
+  };
+
   componentDidMount(){
-    BooksAPI.getAll().then(data => console.log(data))
+    BooksAPI.getAll().then(books => this.categorizeBooks(books));
   }
 
-  state = {
-    /**
-     * TODO: Instead of using this state variable to keep track of which page
-     * we're on, use the URL in the browser's address bar. This will ensure that
-     * users can use the browser's back and forward buttons to navigate between
-     * pages, as well as provide a good URL they can bookmark and share.
-     */
-    showSearchPage: false
-  }
+  state = {}
 
   render() {
     return (
@@ -26,9 +35,9 @@ class BooksApp extends React.Component {
               <h1>MyReads</h1>
             </div>
             <div className="list-books-content">
-              <Category title='Currently Reading' books={[]} />
-              <Category title='Want To Read' books={[]} />
-              <Category title='Read' books={[]} />
+              <Category title='Currently Reading' books={this.state.currentlyReading} />
+              <Category title='Want To Read' books={this.state.wantToRead} />
+              <Category title='Read' books={this.state.read} />
             </div>
           </div>
       </div>
