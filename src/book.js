@@ -9,13 +9,14 @@ class Book extends React.Component {
 
   render() {
     const { book, onBookUpdate } = this.props;
+    const bookShelf = book.shelf ? book.shelf : 'none';
     return (<li>
       <div className="book">
         <div className="book-top">
-          <div className="book-cover" style={{ width: 128, height: 193, backgroundImage: `url(${book.imageLinks.thumbnail})` }}></div>
+          <div className="book-cover" style={{ width: 128, height: 193, backgroundImage: book.imageLinks && `url(${book.imageLinks.thumbnail})` }}></div>
           <div className="book-shelf-changer">
-            <select value={book.shelf} onChange={this.categoryChange.bind(this, book, onBookUpdate)}>
-              <option value="none" disabled>Move to...</option>
+            <select value={bookShelf} onChange={this.categoryChange.bind(this, book, onBookUpdate)}>
+              <option value="disabled" disabled>Move to...</option>
               <option value="currentlyReading">Currently Reading</option>
               <option value="wantToRead">Want to Read</option>
               <option value="read">Read</option>
