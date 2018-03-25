@@ -6,7 +6,7 @@ import {Link} from 'react-router-dom'
 
 class BooksApp extends React.Component {
 
-    state = {}
+    state = {'books': {}}
 
     componentDidMount() {
         BooksAPI.getAll().then(books => this.categorizeBooks(books));
@@ -25,7 +25,7 @@ class BooksApp extends React.Component {
             }
         }
 
-        this.setState(booksByCategory);
+        this.setState({'books':booksByCategory});
     };
 
     updateBook = (book, shelf) => {
@@ -34,21 +34,22 @@ class BooksApp extends React.Component {
     }
 
     render() {
+        const {books} = this.state;
         return (
             <div className="list-books">
                 <div className="list-books-title">
                     <h1>MyReads</h1>
                 </div>
                 <div className="list-books-content">
-                    <Category title='Currently Reading' books={this.state.currentlyReading}
+                    <Category title='Currently Reading' books={books.currentlyReading}
                         onBookUpdate={(book, shelf) => this.updateBook(book, shelf)} />
-                    <Category title='Want To Read' books={this.state.wantToRead}
+                    <Category title='Want To Read' books={books.wantToRead}
                         onBookUpdate={(book, shelf) => this.updateBook(book, shelf)} />
-                    <Category title='Read' books={this.state.read}
+                    <Category title='Read' books={books.read}
                         onBookUpdate={(book, shelf) => this.updateBook(book, shelf)} />
                 </div>
                 <div className="open-search">
-                    <Link to='/searchBook'>Add a book</Link>
+                    <Link to='/search'>Add a book</Link>
                 </div>
             </div>
         )
